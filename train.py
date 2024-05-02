@@ -44,7 +44,7 @@ def train_model(model, train_loader, test_loader, loss_fn, optimizer, epochs = 1
             batch_loss = train_step(x_batch, y_batch)
             batch_losses.append(batch_loss)
             
-        if (epoch + 1) % 10 == 0:
+        if (epoch + 1) % 2 == 0:
             loss = np.mean(batch_losses)
             print("train loss at {} epoch:{}".format(epoch + 1, loss))
 
@@ -57,11 +57,8 @@ def train_model(model, train_loader, test_loader, loss_fn, optimizer, epochs = 1
             for x_batch_test, y_batch_test in test_loader:
                 x_batch_test = x_batch_test.to(device)
                 y_batch_test = y_batch_test.to(device)
-                result, cnt = evaluate_step(x_batch_test, y_batch_test)
+                result, cnt = evaluate_step(model, x_batch_test, y_batch_test)
                 test_result += result
                 test_cnt += cnt
             test_accuracy = 100 * test_result / test_cnt
             print("test accuracy: {}%".format(test_accuracy))
-            
-def check():
-    print('check')
